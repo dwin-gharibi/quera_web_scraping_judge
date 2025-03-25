@@ -61,7 +61,7 @@ DOCKER_COMPOSE_TEMPLATE = {
                 'networks': ['selenium_network']
             },
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx-server',
                 'ports': ['8081:80'],
                 'volumes': ['./nginx/html:/usr/share/nginx/html'],
@@ -102,7 +102,7 @@ DOCKER_COMPOSE_TEMPLATE = {
                 'networks': ['selenium_network']
             },
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx-server',
                 'ports': ['8081:80'],
                 'volumes': ['./nginx/html:/usr/share/nginx/html'],
@@ -148,7 +148,7 @@ DOCKER_COMPOSE_TEMPLATE = {
                 'networks': ['default']
             },
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx',
                 'ports': ['80:80'],
                 'volumes': ['./nginx:/etc/nginx/sites-enabled'],
@@ -174,7 +174,7 @@ DOCKER_COMPOSE_TEMPLATE = {
                 'networks': ['default']
             },
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx',
                 'ports': ['80:80'],
                 'volumes': ['./nginx:/etc/nginx/sites-enabled'],
@@ -200,7 +200,7 @@ DOCKER_COMPOSE_TEMPLATE = {
                 'networks': ['default']
             },
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx',
                 'ports': ['80:80'],
                 'volumes': ['./nginx:/etc/nginx/sites-enabled'],
@@ -236,7 +236,7 @@ DOCKER_COMPOSE_TEMPLATE = {
         },
         'services': {
             'nginx': {
-                'image': 'nginx:alpine',
+                'image': 'nginx:1.20.2-alpine',
                 'container_name': 'nginx',
                 'ports': ['8081:80'],
                 'volumes': ['./nginx:/usr/share/nginx/html'],

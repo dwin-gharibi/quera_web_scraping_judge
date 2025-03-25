@@ -2,8 +2,8 @@ networks:
   selenium_network:
     driver: bridge
 services:
-  firefox-node-1:
-    container_name: firefox-node-1
+  firefox:
+    container_name: firefox
     depends_on:
     - selenium-hub
     environment:
@@ -15,16 +15,16 @@ services:
     - selenium_network
   nginx:
     container_name: nginx
-    image: nginx:alpine
+    image: nginx:1.20.2-alpine
     networks:
-    - default
+    - selenium_network
     ports:
     - 8081:80
     volumes:
-    - ./nginx:/usr/share/nginx/html
+    - ./nginx:/usr/share/nginx
   selenium-hub:
     container_name: selenium-hub
-    image: selenium/standalone-hub:4.10.0
+    image: selenium/hub:4.10.0
     networks:
     - selenium_network
     ports:

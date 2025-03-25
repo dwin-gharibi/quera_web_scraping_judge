@@ -1,31 +1,26 @@
 import unittest
 import os
 from scripts.docker_handler import DockerHandler
-from scripts.asm_runner import AssemblyRunner
+from scripts.selenium_runner import AssemblyRunner
+from solution.solution import SeleniumScraper
 
 class TestAssemblyPrograms(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         DockerHandler.start_container()
 
-    @classmethod
-    def tearDownClass(cls):
-        DockerHandler.stop_container()
+    # @classmethod
+    # def tearDownClass(cls):
+    #     DockerHandler.stop_container()
 
-    def test_1(self):
-        asm_file = "Q2.asm"
-        input_file = "input4.txt"
-        output_file = "output4.txt"
+    def test_01_scrape_home_page(self):
+        """Test the solution.py script functionality (scraping home page)."""
+        scraper = SeleniumScraper("chrome")
+        scraped_text = scraper.scrape_home_page()
 
-        AssemblyRunner.compile_asm(asm_file)
-        output = AssemblyRunner.run_asm(asm_file, input_file)
-
-        output_path = os.path.join(AssemblyRunner.TEST_CASES_FOLDER, "out", output_file)
-        with open(output_path, "r") as f:
-            expected_output = [line.strip() for line in f.readlines()]
-
-        self.assertEqual(output, expected_output, f"Unexpected output for {asm_file}")
-
+        # Verify that we have successfully scraped the text and it matches the expected content
+        self.assertIsNotNone(scraped_text, "Failed to scrape the home page.")
+        self.assertIn("Home Page", scraped_text, f"Scraped text '{scraped_text}' does not contain expected 'Home Page'.")
 
 if __name__ == "__main__":
     unittest.main()

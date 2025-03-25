@@ -6,7 +6,7 @@ import time
 import requests
 from selenium import webdriver
 
-class AssemblyRunner:
+class SeleniumRunner:
     SOLUTION_FOLDER = os.path.abspath("solution")
     TEST_CASES_FOLDER = os.path.abspath("test_cases")
     DOCKER_EXEC = ["docker-compose", "exec", "-T", "asm-container"]
@@ -43,16 +43,6 @@ class AssemblyRunner:
             time.sleep(2)
 
         print("Selenium Hub did not become ready within the timeout period.")
-
-    @staticmethod
-    def run_asm(asm_file, input_file):
-        input_path = f"/test_cases/in/{input_file}"
-        with open(os.path.join(AssemblyRunner.TEST_CASES_FOLDER, "in", input_file), "r") as f:
-            expected_input = "\n".join([line.strip() for line in f.readlines()])
-
-        command = AssemblyRunner.DOCKER_EXEC + ["bash", "-c", f"echo \"{expected_input}\" | ./a.out"]
-        output, _ = DockerHandler.exec_command(command)
-        return output
 
     @staticmethod
     def get_webdriver(cls, browser):

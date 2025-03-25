@@ -216,6 +216,13 @@ def generate_docker_compose(project_type, mode, num_firefox_nodes, num_chrome_no
         docker_compose = DOCKER_COMPOSE_TEMPLATE[project_type]
         
         if mode == 'node':
+            docker_compose['services']['selenium-hub'] = {
+                    'image': 'selenium/standalone-hub:4.10.0',
+                    'container_name': 'selenium-hub',
+                    'ports': ['4444:4444'],
+                    'networks': ['selenium_network']
+                }
+            
             for i in range(num_firefox_nodes):
                 docker_compose['services'][f'firefox-node-{i+1}'] = {
                     'image': 'selenium/node-firefox:4.10.0',

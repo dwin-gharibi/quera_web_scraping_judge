@@ -1,10 +1,48 @@
 version: "3.3"
+
+networks:
+  selenium_network:
+    driver: bridge
+
 services:
-  asm-container:
-    build:
-      context: ./solution
-      dockerfile: Dockerfile
-    container_name: "asm-container"
+  selenium-hub:
+    image: registry.gitlab.com/qio/standard/selenium/hub:4.10.0
+    container_name: selenium-hub
+    networks:
+      - selenium_network
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: registry.gitlab.com/qio/standard/selenium/node-chrome:4.10.0
+    container_name: chrome-node
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - selenium_network
+
+  firefox:
+    image: registry.gitlab.com/qio/standard/selenium/node-firefox:4.10.0
+    container_name: firefox-node
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - selenium_network
+
+  nginx:
+    image: registry.gitlab.com/qio/standard/nginx:1.20.2-alpine
+    container_name: nginx-server
+    ports:
+      - "8081:80"
     volumes:
-      - ./solution:/workspace
-      - ./test_cases:/test_cases
+      - ./nginx/html:/usr/share/nginx/html
+    networks:
+      - selenium_network  # Connect to the same network

@@ -7,7 +7,7 @@
     "single_file_path": "solution/solution.py",
     "packages": [
         {
-            "name": "php",
+            "name": "nginx",
             "score": 100,
             "tests": [
                 "test_1",

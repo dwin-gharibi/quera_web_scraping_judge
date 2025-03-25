@@ -71,6 +71,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'standalone': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'chrome': {
                 'image': 'selenium/standalone-chrome:4.10.0',
@@ -112,6 +117,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'php': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'php': {
                 'image': 'php:7.4-apache',
@@ -124,6 +134,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'laravel': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'php': {
                 'image': 'php:7.4-fpm',
@@ -143,6 +158,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'django': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'python': {
                 'image': 'python:3.9',
@@ -164,6 +184,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'flask': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'flask': {
                 'image': 'python:3.9',
@@ -185,6 +210,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'python': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'python': {
                 'image': 'python:3.9',
@@ -199,6 +229,11 @@ DOCKER_COMPOSE_TEMPLATE = {
     },
     'nginx': {
         'version': "3.3",
+        'networks': {
+            'selenium_network': {
+                'driver': 'bridge'
+            }
+        },
         'services': {
             'nginx': {
                 'image': 'nginx:alpine',
@@ -216,8 +251,9 @@ def generate_docker_compose(project_type, mode, num_firefox_nodes, num_chrome_no
         docker_compose = DOCKER_COMPOSE_TEMPLATE[project_type]
         
         if mode == 'node':
+            
             docker_compose['services']['selenium-hub'] = {
-                    'image': 'selenium/standalone-hub:4.10.0',
+                    'image': 'selenium/hub:4.10.0',
                     'container_name': 'selenium-hub',
                     'ports': ['4444:4444'],
                     'networks': ['selenium_network']

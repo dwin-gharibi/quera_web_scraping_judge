@@ -1,0 +1,32 @@
+networks:
+  selenium_network:
+    driver: bridge
+services:
+  firefox-node-1:
+    container_name: firefox-node-1
+    depends_on:
+    - selenium-hub
+    environment:
+    - SE_EVENT_BUS_HOST=selenium-hub
+    - SE_EVENT_BUS_PUBLISH_PORT=4442
+    - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    image: selenium/node-firefox:4.10.0
+    networks:
+    - selenium_network
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    networks:
+    - default
+    ports:
+    - 8081:80
+    volumes:
+    - ./nginx:/usr/share/nginx/html
+  selenium-hub:
+    container_name: selenium-hub
+    image: selenium/standalone-hub:4.10.0
+    networks:
+    - selenium_network
+    ports:
+    - 4444:4444
+version: '3.3'

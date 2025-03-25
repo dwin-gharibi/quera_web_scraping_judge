@@ -12,10 +12,13 @@ def main():
     parser.add_argument("--num_chromium_nodes", type=int, default=0, help="Number of Chromium nodes (for node mode).")
     parser.add_argument("--num_edge_nodes", type=int, default=0, help="Number of Edge nodes (for node mode).")
     
+    parser.add_argument("--test_num", type=int, default=5, help="Number of tests")
+    parser.add_argument("--solution", type=str, default="solution.py", help="Solution file")
+
     args = parser.parse_args()
 
-    solution_file = "solution.py"
-    generate_config(solution_file, args.project_type)
+    solution_file = args.solution
+    generate_config(solution_file, args.project_type, args.test_num)
     generate_valid_files(solution_file)
 
     generate_docker_compose(args.project_type, args.mode, args.num_firefox_nodes, args.num_chrome_nodes, args.num_chromium_nodes, args.num_edge_nodes)
